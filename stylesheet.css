@@ -7,8 +7,16 @@ body {
 #header {
     background-color: azure;
     display: flex;
-    justify-content: space-around;
     border-bottom: 1px solid black;
+}
+#header>h1 {
+    margin-right: auto;
+    margin-left: 3em;
+}
+#header>button {
+    margin-right: 3em;
+    height: 30px;
+    align-self: center;
 }
 
 #gameContainer {
@@ -17,6 +25,12 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(250px, 4fr));
     grid-template-rows: repeat(auto-fit, 1fr);
     
+}
+
+#gameMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .activeGame {

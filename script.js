@@ -79,6 +79,7 @@
 
     //function to swap current player from X to O
     function currentTurn () {
+  
         let current = 'X';
 
         const getTurn = () => {
@@ -98,10 +99,12 @@
     }
 
     function initialize (board) {
-        const gameID = crypto.randomUUID();
+        const gameID = 'gameUI';
         let tileEvents = [];
         
         const createUI = () => {
+            let player1 = document.getElementById('player1').value;
+
             //create container for 1 game
             let newElement = document.createElement('div');
             newElement.classList.add('activeGame');
@@ -126,7 +129,7 @@
             display.classList.add('display');
             display.setAttribute('id', ('display'+gameID));
             document.getElementById(gameID).appendChild(display);
-            display.appendChild(document.createTextNode('Player X Turn'));
+            display.appendChild(document.createTextNode(player1+`'s Turn`));
 
             newElement = document.createElement('button');
             newElement.classList.add('reset');
@@ -142,20 +145,21 @@
             })
         }
         const boardDisplay = (index, end) => {
+
             document.getElementById(index+gameID).appendChild(document.createTextNode(turn.getTurn()));
             if (end === 'win'){
-                document.getElementById('display'+gameID).textContent = 'Player '+turn.getTurn()+' Wins!';
+                document.getElementById('display'+gameID).textContent = turnDisplay()+' Wins!';
                 endListeners();
             } else if (end === 'tie') {
                 document.getElementById('display'+gameID).textContent = 'Tied Game!';
                 endListeners();
             } else {
                 turn.swap();
-                document.getElementById('display'+gameID).textContent = 'Player '+turn.getTurn()+' Turn!';
+                document.getElementById('display'+gameID).textContent = turnDisplay()+`'s Turn`;
+                console.log(turn.getTurn())
                 
             }
-            //turn on x or O on tile
-            //switch the turn display element
+         
         }
         const endListeners = () => {
             for (let i = 0; i < 9; i++) {
@@ -163,11 +167,53 @@
                 newElement.removeEventListener('click', tileEvents[i]);
             }
         }
+        const turnDisplay = () => {
+            if (turn.getTurn() === 'X') {
+                return document.getElementById('player1').value;
+            } else {
+                return document.getElementById('player2').value;
+            }
+        }
         
-        createUI();
-        return {createUI, boardDisplay}
+        return {createUI, boardDisplay, endListeners}
     }
-//end functions
-let board = gameBoard();
-let UI = initialize(board);
-let turn = currentTurn();
+
+    
+    //define new button, it must be hidden to begin with
+    const newButton = document.getElementById('new');
+    newButton.style.display = 'none';
+    
+    //event listener for New Game
+    newButton.addEventListener ('click', () => {
+        
+        //hides new game button
+        newButton.style.display = 'none';
+
+        board.resetBoard();
+        document.getElementById('gameUI').remove();
+        document.getElementById('gameMenu').style.display = 'flex';
+        turn.reset();
+    })
+    //removes board and shows menu
+    
+    const startButton = document.getElementById('start');
+    //event listener for start game
+    startButton.addEventListener ('click', () => {
+        //shows newButton
+        newButton.style.display = 'block';
+        //shows UI
+        UI.createUI()
+        document.getElementById('gameUI').style.display = 'grid';
+        //hides gameMenu
+        document.getElementById('gameMenu').style.display = 'none';
+        
+
+    })
+    let board = gameBoard();
+    let turn = currentTurn();
+    let UI = initialize(board);
+    
+    //hides gameMenu
+    // collects data from inputs
+    //clears input boxes
+
