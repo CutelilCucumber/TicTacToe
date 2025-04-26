@@ -1,41 +1,76 @@
-body {
-    display: grid;
-    grid-template-rows: 1fr 10fr;
-    margin: 0px;
+@font-face {
+    font-family: 'Chalk Board';
+    src: url('./assets/chalkfont/ChalkBoard.woff2') format('woff2'),
+        url('C./assets/chalkfont/ChalkBoard.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
-#header {
-    background-color: azure;
-    display: flex;
-    border-bottom: 1px solid black;
+body {
+    margin: 0px;
+    height: 100vh;
+    font-family: 'Chalk Board';
+    letter-spacing: 2px;
 }
-#header>h1 {
-    margin-right: auto;
-    margin-left: 3em;
+h1 {
+    font-size: 40px;
 }
-#header>button {
-    margin-right: 3em;
-    height: 30px;
-    align-self: center;
+h2 {
+    font-size: 30px;
+    margin-top: -1em;
+    text-align: center;
+}
+h3 {
+    letter-spacing: 3px;
+}
+input {
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    border: dashed 2px white;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: 'Chalk Board';
+    letter-spacing: 2px;
+}
+
+h3:hover, #new:hover, #reset:hover{
+    cursor: grab;
+    color: rgba(255, 255, 255, 0.808);
+}
+
+#new {
+    position: absolute;
+    padding-left: 2em;
+    padding-top: 2em;
+    width: 3em;
+    height: 3em;
+    filter: invert(79%) sepia(97%) saturate(12%) hue-rotate(181deg) brightness(113%) contrast(103%);
 }
 
 #gameContainer {
-    border-top: rgba(0, 0, 0, 0.356) 4px;
+    color: white;
+    background-image: url('./assets/background.png');
+    background-size: cover;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 4fr));
-    grid-template-rows: repeat(auto-fit, 1fr);
-    
+    justify-content: center;
+    height: 100vh;
 }
 
 #gameMenu {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-size: 20px;
+}
+#gameMenu {
+    color: rgb(255, 255, 255);
 }
 
 .activeGame {
-    height: 266px;
-    width: 200px;
+    padding-top: 4em;
+    height: 510px;
+    width: 300px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr .5fr .5fr;
@@ -47,24 +82,41 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 50px;
+    font-size: 60px;
     font-weight: 800;
+    cursor: none;
+}
+.open:hover {
+    background-image: url(./assets/edit.svg);
+    background-size: .6em;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .tile:not(:nth-child(3n)) {
-    border-right: solid 1px black;
+    border-right: dashed 3px white;
+    border-radius: 5px;
 }
 .tile:not(:nth-child(-n + 3)) {
-    border-top: solid 1px black;
+    border-top: dashed 3px white;
+    border-radius: 1px;
 }
 .display {
     grid-column: 1/4;
     text-align: center;
     margin-top: .3em;
 }
-.reset {
+#displaygameUI {
+    margin: 1em;
+    margin-bottom: 0em;
+    font-size: 40px;
+    font-weight: 800;
+}
+#reset {
+    border-top: dashed 3px white;
     grid-column: 1 / 4;
     margin: 2em;
+    padding-top: 1em;
     margin-top: 0;
 }
 

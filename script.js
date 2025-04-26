@@ -103,7 +103,6 @@
         let tileEvents = [];
         
         const createUI = () => {
-            let player1 = document.getElementById('player1').value;
 
             //create container for 1 game
             let newElement = document.createElement('div');
@@ -114,6 +113,7 @@
             for(let i = 0; i < 9; i++){
                 newElement = document.createElement('div');
                 newElement.classList.add('tile');
+                newElement.classList.add('open')
                 document.getElementById(gameID).appendChild(newElement);
                 newElement.setAttribute('id', (i+gameID));
 
@@ -121,6 +121,7 @@
                 tileEvents[i] = function(e) {
                     let index = e.target.id.slice(0, 1);
                     playTurn(board, index);
+                    document.getElementById(e.target.id).classList.remove('open')
                 };
 
                 newElement.addEventListener('click', tileEvents[i], {once: true});
@@ -129,12 +130,12 @@
             display.classList.add('display');
             display.setAttribute('id', ('display'+gameID));
             document.getElementById(gameID).appendChild(display);
-            display.appendChild(document.createTextNode(player1+`'s Turn`));
+            display.appendChild(document.createTextNode(turnDisplay()+`'s Turn`));
 
-            newElement = document.createElement('button');
-            newElement.classList.add('reset');
+            newElement = document.createElement('h2');
+            newElement.setAttribute('id', 'reset')
             document.getElementById(gameID).appendChild(newElement);
-            newElement.appendChild(document.createTextNode('Restart Game'));
+            newElement.appendChild(document.createTextNode('Rematch!'));
 
             newElement.addEventListener('click', () => {
 
@@ -156,22 +157,30 @@
             } else {
                 turn.swap();
                 document.getElementById('display'+gameID).textContent = turnDisplay()+`'s Turn`;
-                console.log(turn.getTurn())
                 
             }
-         
         }
         const endListeners = () => {
             for (let i = 0; i < 9; i++) {
                 let newElement = document.getElementById(i+gameID);
+
                 newElement.removeEventListener('click', tileEvents[i]);
             }
         }
         const turnDisplay = () => {
+            let player1 = document.getElementById('player1').value;
+            let player2 = document.getElementById('player2').value;
+            if (player1 === ''){
+                player1 = 'X';
+            }
+            if (player2 === ''){
+                player2 = 'O';
+            }
+
             if (turn.getTurn() === 'X') {
-                return document.getElementById('player1').value;
+                return player1
             } else {
-                return document.getElementById('player2').value;
+                return player2
             }
         }
         
